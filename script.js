@@ -14,13 +14,51 @@ const confidenceValue = document.getElementById('confidenceValue');
 const copyBtn = document.getElementById('copyBtn');
 const downloadBtn = document.getElementById('downloadBtn');
 const searchBtn = document.getElementById('searchBtn');
+const uploadArea = document.getElementById('uploadArea');
+const themeToggle = document.getElementById('themeToggle');
 
 let currentImage = null;
 
-// Initialize results container visible with blank values
+// Theme toggle
+themeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('light-mode');
+    const icon = themeToggle.querySelector('i');
+    if (document.body.classList.contains('light-mode')) {
+        icon.className = 'fas fa-sun';
+    } else {
+        icon.className = 'fas fa-moon';
+    }
+});
+
+// Handle upload area click
+uploadArea.addEventListener('click', () => {
+    imageInput.click();
+});
+
+// Handle drag and drop
+uploadArea.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    uploadArea.classList.add('dragover');
+});
+
+uploadArea.addEventListener('dragleave', () => {
+    uploadArea.classList.remove('dragover');
+});
+
+uploadArea.addEventListener('drop', (e) => {
+    e.preventDefault();
+    uploadArea.classList.remove('dragover');
+    const files = e.dataTransfer.files;
+    if (files.length > 0) {
+        imageInput.files = files;
+        imageInput.dispatchEvent(new Event('change'));
+    }
+});
+
+// Initialize results container visible with welcome message
 resultsContainer.style.display = 'block';
-outputText.value = '';
-confidenceValue.textContent = '0%';
+outputText.value = 'Welcome to OCR Pro!\n\nUpload an image or provide a URL to extract text from images with ease.\n\nSupported formats: JPG, PNG, GIF, BMP';
+confidenceValue.textContent = 'Ready';
 
 // Handle file upload
 imageInput.addEventListener('change', (e) => {
@@ -57,7 +95,7 @@ extractBtn.addEventListener('click', () => {
     progressBar.style.width = '0%';
     progressText.textContent = 'Initializing OCR...';
     extractBtn.disabled = true;
-    extractBtn.innerHTML = '<span class="live-indicator"></span> <i class="fas fa-magic"></i> Processing...';
+    extractBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
 
     Tesseract.recognize(
         currentImage,

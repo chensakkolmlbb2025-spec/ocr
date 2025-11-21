@@ -3,24 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OCR Extractor Tool</title>
+    <meta name="description" content="Free online OCR text extractor tool. Upload images or provide URLs to extract text accurately. Supports multiple image formats.">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#26282C">
+    <meta name="keywords" content="OCR, text extraction, image to text, online OCR tool, free OCR, extract text from image">
+    <link rel="canonical" href="https://yourdomain.com/">
+    <!-- Open Graph -->
+    <meta property="og:title" content="Free Online OCR Text Extractor">
+    <meta property="og:description" content="Extract text from images online for free. Supports JPG, PNG, GIF, BMP formats.">
+    <meta property="og:image" content="https://yourdomain.com/og-image.jpg">
+    <meta property="og:url" content="https://yourdomain.com/">
+    <meta property="og:type" content="website">
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Free Online OCR Text Extractor">
+    <meta name="twitter:description" content="Extract text from images online for free. Supports JPG, PNG, GIF, BMP formats.">
+    <meta property="twitter:image" content="https://yourdomain.com/twitter-image.jpg">
+    <title>Free Online OCR Text Extractor - Extract Text from Images</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "WebApplication",
+            "name": "OCR Text Extractor",
+            "description": "Free online tool to extract text from images using OCR technology.",
+            "url": "https://yourdomain.com/",
+            "applicationCategory": "Utility",
+            "operatingSystem": "Web",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+            },
+            "potentialAction": {
+                "@type": "SearchAction",
+                "target": "https://yourdomain.com/?s={search_term_string}",
+                "query-input": "required name=search_term_string"
+            }
+        }
+        </script>
 </head>
 <body>
+    <header class="app-header">
+        <div class="container d-flex flex-row justify-content-between align-items-center">
+            <a class="brand-title" href="/" aria-label="OCR Pro home"><i class="fas fa-robot"></i> OCR Pro</a>
+            <div class="header-actions">
+                <button id="themeToggle" class="btn-icon" title="Toggle Theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
     <div class="app-container">
         <!-- Left Panel: Input -->
         <div class="panel input-panel">
             <div class="panel-content">
-                <h1 class="panel-title"><i class="fas fa-search"></i> OCR Text Extractor</h1>
+                <h1 class="panel-title"><i class="fas fa-search"></i> Free Online OCR Text Extractor</h1>
 
                 <!-- Upload Section -->
                 <div class="input-section">
-                    <label for="imageInput" class="input-label">Select Image</label>
-                    <input type="file" class="input-control" id="imageInput" accept="image/*">
-                    <div class="input-help">Supported formats: JPG, PNG, GIF, BMP</div>
+                    <div class="upload-area" id="uploadArea">
+                        <input type="file" id="imageInput" accept="image/*" style="display: none;">
+                        <div class="upload-content">
+                            <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                            <p class="upload-text">Click to upload or drag and drop an image</p>
+                            <p class="upload-help">Supported formats: JPG, PNG, GIF, BMP</p>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- URL Input -->
@@ -58,7 +111,7 @@
         <!-- Right Panel: Results -->
         <div class="panel results-panel">
             <div class="panel-content">
-                <h2 class="panel-title">Extracted Text</h2>
+                <h2 class="panel-title"><i class="fas fa-file-alt"></i> Extracted Text</h2>
 
                 <!-- Results -->
                 <div id="resultsContainer" style="display: none;">
@@ -83,6 +136,17 @@
             </div>
         </div>
     </div>
+
+    <footer class="app-footer">
+        <div class="container">
+            <p>&copy; 2025 OCR Pro. Powered by Tesseract.js</p>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Contact Us</a>
+            </div>
+        </div>
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
