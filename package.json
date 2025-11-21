@@ -4,8 +4,8 @@
   "description": "Ultra-premium OCR text extractor with glassmorphism UI",
   "main": "index.html",
   "scripts": {
-    "dev": "python3 -m http.server 8000",
-    "build": "echo 'Static site - no build required'",
+  "dev": "python3 -m http.server 8000",
+  "build": "rm -rf public && mkdir -p public && cp -R index.html style.css script.js assets public/",
     "deploy": "npx wrangler pages deploy .",
     "deploy:pages": "npx wrangler pages deploy ."
   },

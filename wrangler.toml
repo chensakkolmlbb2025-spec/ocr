@@ -10,7 +10,10 @@ command = "echo 'Static site - no build required'"
 
 # Pages: where the static files live. Use '.' to deploy the repository root
 [assets]
-directory = "."
+# Point the assets directory to a dedicated `public` folder to avoid including
+# large development files (node_modules, etc.) when deploying from CI. The
+# CI runner previously scanned the repo root and found a 112MiB binary.
+directory = "./public"
 
 # Environment variables (if needed)
 [vars]
@@ -28,7 +31,8 @@ directory = "."
 command = "echo 'Static site - no build required'"
 
 [env.production.assets]
-directory = "."
+# Deploy the `public` directory for production to avoid including large dev files
+directory = "./public"
 
 [env.production.vars]
 # Example: point to any environment-specific variables (avoid secrets in file)
@@ -39,6 +43,6 @@ directory = "."
 [env.staging.build]
 command = "echo 'Static site - no build required'"
 [env.staging.assets]
-directory = "."
+directory = "./public"
 [env.staging.vars]
 # SITE_NAME = "OCR Staging"
