@@ -6,12 +6,18 @@
   "scripts": {
     "dev": "python3 -m http.server 8000",
     "build": "echo 'Static site - no build required'",
-    "deploy": "wrangler pages deploy .",
-    "preview": "python3 -m http.server 8000"
+    "deploy": "npx wrangler pages deploy .",
+    "deploy:pages": "npx wrangler pages deploy ."
   },
-  "keywords": ["ocr", "text-extraction", "tesseract", "glassmorphism"],
+  "keywords": [
+    "ocr",
+    "text-extraction",
+    "tesseract",
+    "glassmorphism"
+  ],
   "author": "Kilo Code",
   "license": "MIT",
-  "dependencies": {},
-  "devDependencies": {}
+  "devDependencies": {
+    "wrangler": "^4.50.0"
+  }
 }
