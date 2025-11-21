@@ -32,50 +32,6 @@ npm run dev
 python3 -m http.server 8000
 ```
 
-## Deployment to Cloudflare Pages
-
-### Method 1: Direct Upload (Recommended for quick deployment)
-
-1. Go to [Cloudflare Pages](https://pages.cloudflare.com/)
-2. Click "Create a project"
-3. Choose "Direct upload"
-4. Upload the following files:
-   - `index.html`
-   - `style.css`
-   - `script.js`
-   - `package.json`
-   - `README.md`
-   - `_headers`
-   - `wrangler.toml`
-
-### Method 2: Git Integration (Recommended)
-
-1. Push this code to a Git repository (GitHub, GitLab, etc.)
-2. Go to [Cloudflare Pages](https://pages.cloudflare.com/)
-3. Click "Create a project"
-4. Connect your Git repository
-5. **Important**: Set build settings to:
-   - **Build command**: (leave completely empty - no command)
-   - **Build output directory**: `/` (root directory)
-   - **Root directory**: `/` (leave default)
-6. Deploy
-
-**Note**: Do NOT set the build command to `npx wrangler deploy` or any wrangler command. This is a static site that doesn't need building.
-
-### Method 3: Wrangler CLI (For local deployment)
-
-1. Install Wrangler: `npm install -g wrangler`
-2. Login: `wrangler auth login`
-3. Deploy: `wrangler pages deploy .`
-   - This will upload all files in the current directory
-   - The `wrangler.toml` file configures the deployment
-
-**Note**: Use `wrangler pages deploy` for static sites, not `wrangler deploy` (which is for Workers).
-
-### Environment Variables (Optional)
-
-No environment variables required for this static app.
-
 ## Browser Support
 
 - Chrome 90+
@@ -98,3 +54,43 @@ MIT License - feel free to use and modify.
 - OCR powered by [Tesseract.js](https://github.com/naptha/tesseract.js)
 - Icons by [Font Awesome](https://fontawesome.com/)
 - UI inspired by Apple design language
+
+## Cloudflare Pages / Wrangler environment
+
+This project can be deployed to Cloudflare Pages using Wrangler. The repository includes a `wrangler.toml` file with example environment blocks for `production` and `staging`.
+
+Important notes:
+- Do NOT commit API tokens or secrets into `wrangler.toml`. Use environment variables or Wrangler secrets.
+- For Pages deployments in CI, set a `CF_API_TOKEN` (or `WRANGLER_TOKEN`) with Pages write permissions.
+
+Quick steps to deploy locally:
+
+1. Build (no-op for this static site):
+
+```bash
+npm run build
+```
+
+2. Deploy to Pages (uses `npx` so Wrangler is downloaded automatically):
+
+```bash
+npm run deploy
+# or directly:
+npx wrangler pages deploy . --project-name ocr-text-extractor --branch production
+```
+
+How to set environment-specific values
+
+- Use `wrangler.toml`'s `[env.production]` (or `[env.staging]`) for non-secret configuration like `account_id` or `pages_build_output_dir`.
+- For secrets (API tokens, keys), use:
+
+```bash
+# interactive: stores secret locally in wrangler's config (not recommended for CI)
+npx wrangler secret put MY_SECRET
+
+# For CI, add CF_API_TOKEN (or WRANGLER_TOKEN) to your CI provider's secret/env settings
+```
+
+If you want, I can:
+- Add a GitHub Actions workflow (or Netlify/Other CI snippet) that runs `npm run build` and `npm run deploy` using a `CF_API_TOKEN` secret.
+- Help you generate a scoped Cloudflare API token with only the Pages permissions you need.

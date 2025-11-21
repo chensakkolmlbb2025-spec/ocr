@@ -4,6 +4,41 @@ compatibility_date = "2024-01-01"
 # This is a static site for Cloudflare Pages
 # No build process needed - files are served as-is
 
+# Build section kept minimal; CI uses `npm run build` which echoes a no-op.
+[build]
+command = "echo 'Static site - no build required'"
+
+# Pages: where the static files live. Use '.' to deploy the repository root
+[assets]
+directory = "."
+
 # Environment variables (if needed)
 [vars]
 # Add any environment variables here
+
+# Example environment-specific configuration blocks.
+# Use these to keep production/staging settings separate. Do NOT commit secrets.
+
+[env.production]
+# Uncomment and set your Cloudflare account ID if needed for worker-style commands
+# account_id = "your-account-id-here"
+
+# You can override build/asset settings per environment if needed.
+[env.production.build]
+command = "echo 'Static site - no build required'"
+
+[env.production.assets]
+directory = "."
+
+[env.production.vars]
+# Example: point to any environment-specific variables (avoid secrets in file)
+# SITE_NAME = "OCR Production"
+
+[env.staging]
+# account_id = "your-staging-account-id"
+[env.staging.build]
+command = "echo 'Static site - no build required'"
+[env.staging.assets]
+directory = "."
+[env.staging.vars]
+# SITE_NAME = "OCR Staging"
