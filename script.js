@@ -17,6 +17,11 @@ const searchBtn = document.getElementById('searchBtn');
 
 let currentImage = null;
 
+// Initialize results container visible with blank values
+resultsContainer.style.display = 'block';
+outputText.value = '';
+confidenceValue.textContent = '0%';
+
 // Handle file upload
 imageInput.addEventListener('change', (e) => {
     const file = e.target.files[0];
@@ -26,7 +31,6 @@ imageInput.addEventListener('change', (e) => {
             preview.src = evt.target.result;
             previewContainer.style.display = 'block';
             currentImage = evt.target.result;
-            resultsContainer.style.display = 'none';
         };
         reader.readAsDataURL(file);
     }
@@ -39,7 +43,6 @@ urlBtn.addEventListener('click', () => {
         preview.src = url;
         previewContainer.style.display = 'block';
         currentImage = url;
-        resultsContainer.style.display = 'none';
     }
 });
 
@@ -128,7 +131,7 @@ searchBtn.addEventListener('click', () => {
 function showAlert(message, type) {
     const alertDiv = document.createElement('div');
     alertDiv.className = `alert alert-${type} alert-dismissible fade show position-fixed glass`;
-    alertDiv.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px; border-radius: 16px;';
+    alertDiv.style.cssText = 'bottom: 20px; right: 20px; z-index: 9; min-width: 300px; border-radius: 16px;';
     alertDiv.innerHTML = `
         ${message}
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>

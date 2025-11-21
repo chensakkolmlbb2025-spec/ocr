@@ -141,12 +141,14 @@
     font-size: 15px;
     line-height: 1.6;
     padding: 20px;
-    resize: none;
+    resize: vertical;
     width: 100%;
     height: 500px;
     flex: 1;
     margin-bottom: 24px;
-    overflow: hidden;
+    overflow-y: auto;
+    min-height: 200px;
+    max-height: 500px;
 }
 
 .action-buttons {
@@ -162,7 +164,8 @@
 
     .panel {
         flex: none;
-        height: 50vh;
+        min-height: 50vh;
+        max-height: 50vh;
         border-right: none;
         border-bottom: 1px solid var(--glass-border);
     }
@@ -176,30 +179,47 @@
 
 /* CSS Variables for Light/Dark Mode */
 :root {
-    --glass-bg: rgba(255, 255, 255, 0.12);
-    --glass-border: rgba(255, 255, 255, 0.12);
-    --text-primary: #1A1A1A;
-    --text-secondary: rgba(0, 0, 0, 0.6);
-    --accent: #D4A574;
-    --background: linear-gradient(135deg, rgba(240, 240, 240, 0.8) 0%, rgba(220, 220, 220, 0.6) 100%);
-    --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-    --glow: 0 0 20px rgba(212, 165, 116, 0.3);
-    --hover-shadow: 0 16px 48px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.3);
-    --hover-glow: 0 0 30px rgba(212, 165, 116, 0.5);
+    /* Dark-blur silver theme (default) */
+    --glass-bg: rgba(58, 59, 59, 0.46);
+    --glass-border: rgba(255, 255, 255, 0.06);
+    --text-primary: rgba(250, 250, 250, 0.95);
+    --text-secondary: rgba(255, 255, 255, 0.72);
+    --accent: #D4A574; /* warm accent to contrast the cool silver */
+    --background: linear-gradient(135deg, rgba(122, 124, 126, 0.92) 0%, rgba(70, 77, 90, 0.96) 100%);
+    --card-shadow: 0 10px 40px rgba(6, 8, 10, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+    --glow: 0 0 20px rgba(212, 165, 116, 0.18);
+    --hover-shadow: 0 20px 60px rgba(6, 8, 10, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.02);
+    --hover-glow: 0 0 30px rgba(212, 165, 116, 0.32);
 }
 
 @media (prefers-color-scheme: dark) {
     :root {
-        --glass-bg: rgba(20, 20, 20, 0.45);
-        --glass-border: rgba(255, 255, 255, 0.12);
-        --text-primary: rgba(255, 255, 255, 0.92);
-        --text-secondary: rgba(255, 255, 255, 0.7);
-        --background: linear-gradient(135deg, rgba(10, 10, 10, 0.8) 0%, rgba(30, 30, 30, 0.6) 100%);
-        --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-        --glow: 0 0 20px rgba(212, 165, 116, 0.2);
-        --hover-shadow: 0 16px 48px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-        --hover-glow: 0 0 30px rgba(212, 165, 116, 0.4);
+        /* Keep dark variables consistent with dark-blur silver */
+        --glass-bg: rgba(24, 26, 28, 0.52);
+        --glass-border: rgba(255, 255, 255, 0.06);
+        --text-primary: rgba(250, 250, 250, 0.95);
+        --text-secondary: rgba(255, 255, 255, 0.72);
+        --background: linear-gradient(135deg, rgba(80, 84, 88, 0.94) 0%, rgba(30, 32, 36, 0.98) 100%);
+        --card-shadow: 0 10px 40px rgba(6, 8, 10, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+        --glow: 0 0 20px rgba(212, 165, 116, 0.18);
+        --hover-shadow: 0 20px 60px rgba(6, 8, 10, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.02);
+        --hover-glow: 0 0 30px rgba(212, 165, 116, 0.32);
     }
+}
+
+/* Subtle blurred silver sheen layer for a more textured background */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image: radial-gradient(circle at 10% 10%, rgba(255,255,255,0.03), transparent 12%),
+                      radial-gradient(circle at 90% 80%, rgba(255,255,255,0.02), transparent 14%),
+                      linear-gradient(135deg, rgba(255,255,255,0.02), rgba(0,0,0,0.12));
+    filter: blur(28px) saturate(1.05);
+    opacity: 0.9;
+    mix-blend-mode: overlay;
 }
 
 /* Global Styles */
@@ -215,13 +235,13 @@ body {
     color: var(--text-primary);
     line-height: 1.5;
     letter-spacing: -0.01em;
-    overflow: hidden;
-    height: 100vh;
+    overflow-y: auto;
+    min-height: 100vh;
 }
 
 .app-container {
     display: flex;
-    height: 100vh;
+    min-height: 100vh;
 }
 
 .panel {
@@ -229,6 +249,8 @@ body {
     display: flex;
     flex-direction: column;
     padding: 48px;
+    overflow-y: auto;
+    min-height: 0;
 }
 
 .panel-content {
@@ -520,6 +542,52 @@ body {
 
     .btn {
         width: 100%;
+    }
+
+    .panel {
+        padding: 24px;
+        min-height: 40vh;
+        max-height: max-content;
+    }
+
+    .panel-title {
+        font-size: 28px;
+    }
+
+    .output-text {
+        height: 300px;
+        font-size: 14px;
+    }
+
+    .preview-image {
+        max-height: 200px;
+    }
+}
+
+@media (max-width: 480px) {
+    .panel {
+        padding: 16px;
+        max-height: max-content;
+        
+    }
+
+    .panel-title {
+        font-size: 24px;
+    }
+
+    .btn-custom {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .output-text {
+        padding: 16px;
+        font-size: 13px;
     }
 }
 
