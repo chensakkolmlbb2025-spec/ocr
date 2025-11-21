@@ -48,18 +48,21 @@ python3 -m http.server 8000
    - `_headers`
    - `wrangler.toml`
 
-### Method 2: Git Integration
+### Method 2: Git Integration (Recommended)
 
 1. Push this code to a Git repository (GitHub, GitLab, etc.)
 2. Go to [Cloudflare Pages](https://pages.cloudflare.com/)
 3. Click "Create a project"
 4. Connect your Git repository
-5. Set build settings:
-   - Build command: (leave empty)
-   - Build output directory: `/` (root)
+5. **Important**: Set build settings to:
+   - **Build command**: (leave completely empty - no command)
+   - **Build output directory**: `/` (root directory)
+   - **Root directory**: `/` (leave default)
 6. Deploy
 
-### Method 3: Wrangler CLI (For advanced users)
+**Note**: Do NOT set the build command to `npx wrangler deploy` or any wrangler command. This is a static site that doesn't need building.
+
+### Method 3: Wrangler CLI (For local deployment)
 
 1. Install Wrangler: `npm install -g wrangler`
 2. Login: `wrangler auth login`
@@ -67,7 +70,7 @@ python3 -m http.server 8000
    - This will upload all files in the current directory
    - The `wrangler.toml` file configures the deployment
 
-**Note**: If you get a Worker deployment error, make sure you're using `wrangler pages deploy` for static sites, not `wrangler deploy` (which is for Workers).
+**Note**: Use `wrangler pages deploy` for static sites, not `wrangler deploy` (which is for Workers).
 
 ### Environment Variables (Optional)
 

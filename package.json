@@ -7,7 +7,7 @@
     "dev": "python3 -m http.server 8000",
     "build": "echo 'Static site - no build required'",
     "deploy": "wrangler pages deploy .",
-    "deploy:pages": "wrangler pages deploy ."
+    "preview": "python3 -m http.server 8000"
   },
   "keywords": ["ocr", "text-extraction", "tesseract", "glassmorphism"],
   "author": "Kilo Code",
