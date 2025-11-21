@@ -16,6 +16,8 @@ const downloadBtn = document.getElementById('downloadBtn');
 const searchBtn = document.getElementById('searchBtn');
 const uploadArea = document.getElementById('uploadArea');
 const themeToggle = document.getElementById('themeToggle');
+const themeText = document.getElementById('themeText');
+const clearBtn = document.getElementById('clearBtn');
 
 let currentImage = null;
 
@@ -24,10 +26,27 @@ themeToggle.addEventListener('click', () => {
     document.body.classList.toggle('light-mode');
     const icon = themeToggle.querySelector('i');
     if (document.body.classList.contains('light-mode')) {
-        icon.className = 'fas fa-sun';
-    } else {
         icon.className = 'fas fa-moon';
+        themeText.textContent = 'Light Mode';
+    } else {
+        icon.className = 'fas fa-sun';
+        themeText.textContent = 'Dark Mode';
     }
+});
+
+// Clear image function
+clearBtn.addEventListener('click', () => {
+    imageInput.value = '';
+    urlInput.value = '';
+    currentImage = null;
+    previewContainer.style.display = 'none';
+    resultsContainer.style.display = 'block';
+    outputText.value = 'Welcome to OCR Pro!\n\nUpload an image or provide a URL to extract text from images with ease.\n\nSupported formats: JPG, PNG, GIF, BMP';
+    confidenceValue.textContent = 'Ready';
+    progressContainer.style.display = 'none';
+    extractBtn.disabled = false;
+    extractBtn.innerHTML = '<i class="fas fa-magic"></i> Extract Text';
+    showAlert('Image cleared!', 'info');
 });
 
 // Handle upload area click
@@ -78,9 +97,15 @@ imageInput.addEventListener('change', (e) => {
 urlBtn.addEventListener('click', () => {
     const url = urlInput.value.trim();
     if (url) {
+        preview.onload = () => {
+            currentImage = url;
+            previewContainer.style.display = 'block';
+            showAlert('Image loaded from URL!', 'success');
+        };
+        preview.onerror = () => {
+            showAlert('Failed to load image from URL. Please check the URL and try again.', 'danger');
+        };
         preview.src = url;
-        previewContainer.style.display = 'block';
-        currentImage = url;
     }
 });
 
@@ -167,12 +192,14 @@ searchBtn.addEventListener('click', () => {
 
 // Show alert function
 function showAlert(message, type) {
+    const isLight = document.body.classList.contains('light-mode');
+    const themeClass = isLight ? 'alert-light' : 'alert-dark';
     const alertDiv = document.createElement('div');
-    alertDiv.className = `alert alert-${type} alert-dismissible fade show position-fixed glass`;
+    alertDiv.className = `alert alert-${type} alert-dismissible fade show position-fixed ${themeClass}`;
     alertDiv.style.cssText = 'bottom: 20px; right: 20px; z-index: 9; min-width: 300px; border-radius: 16px;';
     alertDiv.innerHTML = `
         ${message}
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" style="filter: ${isLight ? 'none' : 'invert(1)'}"></button>
     `;
     document.body.appendChild(alertDiv);
     setTimeout(() => {
