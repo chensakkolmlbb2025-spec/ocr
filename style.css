@@ -581,6 +581,13 @@ body.light-mode {
         padding: 0 16px;
     }
 
+     .app-container {
+        /* Use grid layout on very small screens; remove !important to avoid unexpected overrides
+           and use the correct property name `grid-template-columns`. */
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
     .card {
         padding: 24px;
         margin-bottom: 24px;
